@@ -5,5 +5,6 @@ class Todomo < ActiveRecord::Base
   private
   def default_values
     self.done ||= false
+    self.done_time ||= nil
   end
 end
