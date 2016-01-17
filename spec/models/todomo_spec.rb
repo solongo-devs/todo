@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Todomo, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "should have content" do
+    todomo = Todomo.new
+    expect(todomo).to respond_to(:content)
+  end
 end
