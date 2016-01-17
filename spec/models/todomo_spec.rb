@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'timecop'
 
 RSpec.describe Todomo, type: :model do
 
@@ -20,10 +21,6 @@ RSpec.describe Todomo, type: :model do
 
   it "should have done_time" do
     expect(@todomo).to respond_to :done_time
-  end
-
-  it "should have not done by default" do
-    expect(@todomo.done).to be false
   end
 
   describe "validation" do
@@ -53,26 +50,60 @@ RSpec.describe Todomo, type: :model do
   end
 
   describe "database interaction" do
-
-    it "should not save if not valid" do
-      todomo = Todomo.new
-      expect(todomo.save).to be false
-    end
-
-    it "should save a Todomo correctly" do
-      todomo = Todomo.new content: "Hi", title: "Hi"
-      todomo.save
+    it "should save a todomo" do
+      Todomo.create content: "Hi", title: "Hi"
       expect(Todomo.count).to equal 1
     end
 
-    it "should work with multiple create" do
+    it "should save multiple todomos" do
       Todomo.create content: "Hi", title: "Hi"
       Todomo.create content: "Hi2", title: "Hi2"
       expect(Todomo.count).to equal 2
     end
 
+    it "should update a todomo" do
+        todomo = Todomo.create content: "Hi", title: "Hi"
+        todomo.content = "Hi2"
+        todomo.save
+        todomo2 = Todomo.find(1)
+        expect(todomo2.content).to eq "Hi2"
+    end
+
+    it "should update a todomo" do
+        todomo = Todomo.create content: "Hi", title: "Hi"
+        todomo.is_done
+        todomo2 = Todomo.find(1)
+        expect(todomo2.done).to be true
+    end
+
+    it "should delete a todomo" do
+      Todomo.create content: "Hi", title: "Hi"
+      Todomo.delete(1)
+      expect(Todomo.count).to be 0
+    end
+
     after :each do
       Todomo.destroy_all
+    end
+  end
+
+  describe "mark a todomo as done" do
+    it "should have a date when done" do
+      todomo = Todomo.create content: "Hi", title: "Hi"
+      new_time = Time.local(2016, 1, 1, 12, 0, 0)
+      Timecop.freeze(new_time)
+      todomo.is_done
+      expect(todomo.done_time).to eq new_time
+    end
+
+    it "should be done" do
+      todomo = Todomo.create content: "Hi", title: "Hi"
+      todomo.is_done
+      expect(todomo.done).to equal true
+    end
+
+    after :all do
+      Timecop.return
     end
   end
 end

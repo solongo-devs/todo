@@ -47,4 +47,5 @@ group :development do
   gem 'rspec-rails', '~> 3.0'
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem 'timecop'
 end
