@@ -75,4 +75,11 @@ RSpec.describe Todomo, type: :model do
       Todomo.destroy_all
     end
   end
+  describe "finish a todomo" do
+    it "should be done" do
+      todomo = Todomo.new
+      todomo.is_done
+      expect(todomo.done).to be true
+    end
+  end
 end
