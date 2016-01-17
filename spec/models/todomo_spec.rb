@@ -22,6 +22,10 @@ RSpec.describe Todomo, type: :model do
     expect(@todomo).to respond_to :done_time
   end
 
+  it "should have not done by default" do
+    expect(@todomo.done).to be false
+  end
+
   describe "validation" do
     it "should not be valid with empty content" do
       todomo = Todomo.new
@@ -46,7 +50,6 @@ RSpec.describe Todomo, type: :model do
       todomo.done_time = ""
       expect(todomo).not_to be_valid
     end
-
   end
 
   describe "database interaction" do
