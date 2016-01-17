@@ -28,6 +28,25 @@ RSpec.describe Todomo, type: :model do
       todomo.content = ""
       expect(todomo).not_to be_valid
     end
+
+    it "should not be valid with empty title" do
+      todomo = Todomo.new
+      todomo.title = ""
+      expect(todomo).not_to be_valid
+    end
+
+    it "should not be valid with empty done" do
+      todomo = Todomo.new
+      todomo.done = false
+      expect(todomo).not_to be_valid
+    end
+
+    it "should not be valid with empty done_time" do
+      todomo = Todomo.new
+      todomo.done_time = ""
+      expect(todomo).not_to be_valid
+    end
+
   end
 
   describe "database interaction" do
