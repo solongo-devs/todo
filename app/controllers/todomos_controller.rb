@@ -1,0 +1,2 @@
+class TodomosController < ApplicationController
+end
