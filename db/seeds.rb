@@ -5,4 +5,4 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Todomo.create content: "Hi", title: "Bye"
+Todomo.create content: "Hi", title: "Bye", done_time: Time.now
