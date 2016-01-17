@@ -10,4 +10,8 @@ RSpec.describe Todomo, type: :model do
     todomo = Todomo.new
     expect(todomo).to respond_to(:title)
   end
+
+  it "should have done_time" do
+    expect(@todomo).to respond_to :done_time
+  end
 end
