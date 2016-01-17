@@ -22,10 +22,6 @@ RSpec.describe Todomo, type: :model do
     expect(@todomo).to respond_to :done_time
   end
 
-  it "should have not done by default" do
-    expect(@todomo.done).to be false
-  end
-
   describe "validation" do
     it "should not be valid with empty content" do
       todomo = Todomo.new
@@ -53,33 +49,12 @@ RSpec.describe Todomo, type: :model do
   end
 
   describe "database interaction" do
-
-    it "should not save if not valid" do
-      todomo = Todomo.new
-      expect(todomo.save).to be false
-    end
-
-    it "should save a Todomo correctly" do
-      todomo = Todomo.new content: "Hi", title: "Hi"
-      todomo.save
+    it "should save a todomo" do
+      Todomo.create content: "Hi", title: "Hi"
       expect(Todomo.count).to equal 1
     end
-
-    it "should work with multiple create" do
-      Todomo.create content: "Hi", title: "Hi"
-      Todomo.create content: "Hi2", title: "Hi2"
-      expect(Todomo.count).to equal 2
-    end
-
     after :each do
       Todomo.destroy_all
-    end
-  end
-  describe "finish a todomo" do
-    it "should be done" do
-      todomo = Todomo.new
-      todomo.is_done
-      expect(todomo.done).to be true
     end
   end
 end
