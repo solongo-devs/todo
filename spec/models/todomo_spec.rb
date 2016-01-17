@@ -29,4 +29,28 @@ RSpec.describe Todomo, type: :model do
       expect(todomo).not_to be_valid
     end
   end
+
+  describe "database interaction" do
+
+    it "should not save if not valid" do
+      todomo = Todomo.new
+      expect(todomo.save).to be false
+    end
+
+    it "should save a Todomo correctly" do
+      todomo = Todomo.new content: "Hi", title: "Hi"
+      todomo.save
+      expect(Todomo.count).to equal 1
+    end
+
+    it "should work with multiple create" do
+      Todomo.create content: "Hi", title: "Hi"
+      Todomo.create content: "Hi2", title: "Hi2"
+      expect(Todomo.count).to equal 2
+    end
+
+    after :each do
+      Todomo.destroy_all
+    end
+  end
 end
